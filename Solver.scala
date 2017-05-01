@@ -1,10 +1,12 @@
 package solver
 
+import cats._
+import cats.data._
+import cats.implicits._
 import org.scalacheck.Gen
 import org.scalacheck.Prop.forAll
-import org.scalacheck.Properties
 
-object Solver extends Properties("String") {
+object Solver {
 
   sealed trait Step
   case object FillBig extends Step
@@ -16,7 +18,7 @@ object Solver extends Properties("String") {
 
   case class Jugs(bigJug: Int, smallJug: Int)
 
-  lazy val initState = Jugs(0, 0)
+  val initState = Jugs(0, 0)
 
   def fsm(jug: Jugs, step: Step): Jugs = (jug, step) match {
     case (j, FillBig)    => Jugs(5, j.smallJug)
